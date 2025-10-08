@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>{{title}}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f8f9fa;
+      padding-top: 30px;
+    }
+
+    h1 {
+      color: #4b9cd3;
+      font-weight: bold;
+      font-size: 36px;
+    }
+
+    .card {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      background-color: #ffffff;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-header {
+      background-color: #4b9cd3;
+      color: #fff;
+      font-weight: bold;
+      border-radius: 10px 10px 0 0;
+      padding: 10px;
+    }
+
+    .card-body {
+      padding: 15px;
+      color: #333;
+      font-size: 16px;
+    }
+
+    .submit_form {
+      text-align: center;
+      padding: 30px;
+      background: #f1f1f1;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+    }
+
+    .submit_form input[type="submit"] {
+      background-color: #4b9cd3;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .submit_form input[type="submit"]:hover {
+      background-color: #3578b6;
+    }
+
+    .alert {
+      margin-bottom: 20px;
+      border-radius: 5px;
+      padding: 10px;
+    }
+
+    .btn-primary {
+      background-color: #ff7043;
+      border-color: #ff7043;
+    }
+
+    .btn-primary:hover {
+      background-color: #ff5722;
+      border-color: #ff5722;
+    }
+
+    .row {
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+
+<body class="container-fluid">
+
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert alert-info">
+    <strong>{{message}}</strong>
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  <center class="row">
+    <h1><i>__TODO LIST__</i></h1>
+    <hr />
+  </center>
+
+  <div class="row justify-content-center">
+
+    <!-- Todo List Section -->
+    <div class="col-md-8">
+      {% for i in list %}
+      <div class="card">
+        <div class="card-header">
+          <center><b>{{i.title}}</b></center>
+        </div>
+        <div class="card-body">
+          <p><strong>Date:</strong> {{i.date}}</p>
+          <p><strong>Details:</strong> {{i.details}}</p>
+          <form action="/del/{{i.id}}" method="POST" style="text-align: right;">
+            {% csrf_token %}
+            <button value="remove" type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-trash"></span> &nbsp; Remove</button>
+          </form>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Form Section -->
+    <div class="col-md-3">
+      <div class="submit_form">
+        <form method="POST">
+          {% csrf_token %}
+          {{forms}}
+          <input type="submit" class="btn btn-default" value="Submit" />
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+
+</html>
